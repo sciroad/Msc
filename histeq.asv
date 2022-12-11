@@ -2,35 +2,30 @@ prefix="data/";
 datas=["GrayImage.jpeg","ColorImage.tif"];
 
 for i=1:2
-    hold on;
-    Im=imread(prefix+datas(i));
+    Im=imread(prefix+datas(1));
     figure,imshow(Im);
-    title("Original Image "+int2str(i));
-    hsv=rgb2hsv(Im);
+    title('Original Image '+ int2str(i));
     v=hsv(:,:,3);
     pixelData=uint8(255 * v); % 0-1 arasındaki değerleri 0-255 arasına çekiyoruz.
     numberOfPixel=size(pixelData,1)*size(pixelData,2);%toplam pixellerin sayısı
     hist=histCalculator(pixelData);
     pdf=pdfCalculator(hist,numberOfPixel);
     cdf=cdfCalculator(pdf);
-    figure,bar(hist);
-    title("old histogram "+int2str(i));
+    bar(hist);
+    title('old histogram '+ int2str(i));
     figure,stairs(cdf);
-    title("old cdf " +int2str(i));
+    title('old cdf '+ int2str(i));
     hIm=histEq(pixelData,numberOfPixel,255,256);
     hist=histCalculator(hIm);
-    figure,bar(hist);
-    title("new histogram "+int2str(i));
     pdf=pdfCalculator(hist,numberOfPixel);
     cdf=cdfCalculator(pdf);
     figure,stairs(cdf);
-    title("new cdf "+int2str(i));
+    title('new cdf '+ int2str(i));
     hIm=double(hIm)./255;
     hsv(:,:,3)=hIm;
     rgb=hsv2rgb(hsv);
     figure,imshow(rgb);
-    title("Histogram equalized version "+int2str(i));
-    hold off;
+    title('Histogram equalized version '+ int2str(i));
 end
 
 %Histogram Hesaplama
