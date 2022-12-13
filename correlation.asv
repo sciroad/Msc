@@ -1,0 +1,30 @@
+x1=cos(0.10*2*pi*(1:11));
+x2=cos(0.11*2*pi*(1:10));
+
+xC=xcorr(x1,x2);
+o=crossCorrelation(x1,x2);
+disp(xC);
+disp(o)
+function out=crossCorrelation(x1,x2)
+    len=length(x1)+length(x2)-1;
+    out=zeros(1,len);
+    pivot=length(x2);
+    lastPivot=length(x2);
+    index=1;
+    for i=1:len
+        if pivot>1
+            pivot=pivot-1;
+        else
+            index=index+1;
+        end
+        l=lastPivot-pivot;
+        if length(x1)<(index+l)
+            out(i)=dot(x1(i:l),x2(pivot:pivot+(l-i)));
+        end
+        
+    end
+end
+function [i,j]=determineCon(x1,x2,f,e)
+    i=0;
+    j=0;
+end
